@@ -19,6 +19,7 @@ export const NavbarBase = () => {
     const navItems = [
         { label: 'Accueil', href: route('welcome') },
         { label: 'A propos', href: route('about') },
+        { label: 'Ma famille', href: route('family-tree') },
     ];
 
     return (

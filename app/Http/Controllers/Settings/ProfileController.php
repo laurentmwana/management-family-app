@@ -19,13 +19,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $user = $request->user();
-
-        $pathComponent = HasRoleUser::isAdmin($user->role)
-            ? 'settings/profile-admin'
-            : 'settings/profile-user';
-
-        return Inertia::render($pathComponent, [
+        return Inertia::render('settings/profile-user', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);

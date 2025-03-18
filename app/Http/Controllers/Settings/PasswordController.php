@@ -19,13 +19,7 @@ class PasswordController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $user = $request->user();
-
-        $pathComponent = HasRoleUser::isAdmin($user->role)
-            ? 'settings/password-admin'
-            : 'settings/password-user';
-
-        return Inertia::render($pathComponent, [
+        return Inertia::render('settings/password', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);

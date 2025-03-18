@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\GenderEnum;
+use App\Enums\RelationFamilyEnum;
+use App\Models\Family;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,11 @@ class PeopleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'full_name' => $this->faker->name(),
+            'image' => $this->faker->imageUrl(),
+            'relation_family' => $this->faker->randomElement(RelationFamilyEnum::cases())->value,
+            'gender' => $this->faker->randomElement(GenderEnum::cases())->value,
+            'birth' => $this->faker->date(),
         ];
     }
 }

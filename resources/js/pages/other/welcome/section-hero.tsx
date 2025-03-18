@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button-link';
 import { motion } from 'framer-motion';
 
 function FloatingPaths({ position }: { position: number }) {
@@ -7,7 +7,7 @@ function FloatingPaths({ position }: { position: number }) {
         d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${380 - i * 5 * position} -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
             152 - i * 5 * position
         } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${684 - i * 5 * position} ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-        color: `rgba(59,130,246,${0.1 + i * 0.02})`, // Bleu plus clair
+        color: `rgba(59,130,246,${0.1 + i * 0.02})`,
         width: 0.5 + i * 0.03,
     }));
 
@@ -68,29 +68,34 @@ export const SectionHero = () => {
                         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                         <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                     </svg>
-                    Ressources exclusives pour les étudiants de l'ISP
+                    Simplifiez la gestion de votre famille
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }} className="max-w-4xl">
                     <h1 className="mb-6 text-4xl leading-tight font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl dark:text-gray-200">
-                        Réussissez vos études avec nos ressources pédagogiques
+                        Organisez et suivez votre famille en toute sérénité
                     </h1>
 
                     <p className="mb-8 max-w-2xl text-lg text-slate-700 md:text-xl dark:text-gray-300">
-                        Accédez à une bibliothèque complète de travaux pratiques et de syllabus conçus spécifiquement pour les programmes de l'ISP.
+                        Centralisez les informations essentielles de votre famille, planifiez vos événements et facilitez la gestion du quotidien en
+                        quelques clics.
                     </p>
 
                     <div className="flex flex-col gap-4 sm:flex-row">
-                        <Button className="rounded-md bg-blue-600 px-8 py-6 text-lg font-medium text-white hover:bg-blue-700">
-                            Parcourir le catalogue
-                        </Button>
+                        <ButtonLink
+                            href={route('dashboard')}
+                            className="rounded-md bg-blue-600 px-8 py-6 text-lg font-medium text-white hover:bg-blue-700"
+                        >
+                            Découvrir l'application
+                        </ButtonLink>
 
-                        <Button
+                        <ButtonLink
+                            href={route('about')}
                             variant="outline"
                             className="rounded-md border-slate-200 bg-white px-8 py-6 text-lg font-medium text-slate-800 hover:bg-slate-50"
                         >
-                            Comment ça marche
-                        </Button>
+                            En savoir plus
+                        </ButtonLink>
                     </div>
                 </motion.div>
             </div>

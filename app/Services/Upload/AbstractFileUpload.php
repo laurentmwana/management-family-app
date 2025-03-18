@@ -32,7 +32,6 @@ abstract class AbstractFileUpload
             }
 
             return Storage::disk($this->disk)->putFile($directory, $uploadedFile);
-            
         } catch (\Throwable $e) {
             throw new FileUploadException('Erreur lors du modification du fichier : ' . $e->getMessage(), 0, $e);
         }

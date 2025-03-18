@@ -34,6 +34,10 @@ export const AuthUserOption = ({ user }: AuthUserOptionProps) => {
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>Autres</DropdownMenuLabel>
 
+                <DropdownMenuItem onClick={() => router.get(route('dashboard'))}>
+                    <span className="flex items-center gap-2">Tableau de bord</span>
+                </DropdownMenuItem>
+
                 <DropdownMenuItem onClick={() => router.post(route('logout'))}>
                     <span className="flex items-center gap-2">Se déconnecter</span>
                 </DropdownMenuItem>

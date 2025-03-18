@@ -14,12 +14,6 @@ class AppearanceController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = $request->user();
-
-        $pathComponent = HasRoleUser::isAdmin($user->role)
-            ? 'settings/appearance-admin'
-            : 'settings/appearance-user';
-
-        return Inertia::render($pathComponent);
+        return Inertia::render('appearance');
     }
 }

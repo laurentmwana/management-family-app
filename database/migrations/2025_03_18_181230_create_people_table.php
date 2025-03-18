@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\GenderEnum;
+use App\Enums\RelationFamilyEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,14 +15,17 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('firstname');
             $table->string('image');
-            $table->text('bio')->nullable();
-            $table->date('birth');
+            $table->string('full_name');
             $table->enum('gender', array_map(
                 fn(GenderEnum $enum) => $enum->value,
                 GenderEnum::cases()
+            ));
+            $table->date('birth');
+            $table->text('bio')->nullable();
+            $table->enum('relation_family', array_map(
+                fn(RelationFamilyEnum $enum) => $enum->value,
+                RelationFamilyEnum::cases()
             ));
             $table->timestamps();
         });
