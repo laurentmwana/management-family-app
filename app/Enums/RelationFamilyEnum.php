@@ -8,5 +8,5 @@ enum RelationFamilyEnum: string
     case CHILD = "Enfant";
     case COUSIN = "cousin";
     case UNCLE = "Oncle";
-    case AUNT = "aunt";
+    case AUNT = "Tante";
 }
