@@ -124,10 +124,10 @@ export const ModalFormPeople = ({ id, genders, relations, full_name, family_id, 
                         </div>
 
                         <div className="grid gap-1">
-                            <Label htmlFor="relation_family">Type</Label>
+                            <Label htmlFor="relation_family">Relation</Label>
                             <SelectSingle
                                 value={data.relation_family}
-                                placeholder="Type"
+                                placeholder="Relation"
                                 onChange={(gId) => setData('relation_family', gId)}
                                 options={relations.map((c) => {
                                     return {

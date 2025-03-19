@@ -2,13 +2,10 @@
 
 namespace App\Queries;
 
-use App\Models\People;
 use App\Models\Family;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Searchable\SearchData;
 use Illuminate\Support\Collection;
-use App\Exceptions\ModelNotFoundException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,31 +36,16 @@ abstract class QueryFamily
     {
         $user = Auth::user();
 
-        $builder =  Family::with(['peoples'])
+        $builder = Family::with(['peoples'])
             ->where('user_id', '=', $user->id)
             ->orderByDesc('updated_at');
 
-        $familyId = $request->query('family');
-
-        $columnSearch = ['full_name', 'bio', 'gender', 'relation_family'];
+        $columnSearch = ['name', 'description'];
 
         $serachValue = $request->query('q');
 
         if ($serachValue !== null && !empty($serachValue)) {
             $builder = SearchData::handle($builder, $serachValue, $columnSearch);
-        }
-
-        if ($familyId !== null) {
-
-            if (!Family::where('id', $familyId)->exists()) {
-                throw new ModelNotFoundException(
-                    "La famille avec l'ID {$familyId} n'existe pas."
-                );
-            }
-
-            $builder->whereHas('family', function ($query) use ($familyId) {
-                $query->where('id', $familyId);
-            });
         }
 
         return $builder->paginate();

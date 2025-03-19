@@ -2,27 +2,38 @@
 
 namespace App\Queries;
 
-use App\Models\People;
 use App\Models\Family;
-use App\Models\Category;
+use App\Models\People;
 use Illuminate\Http\Request;
 use App\Searchable\SearchData;
 use Illuminate\Support\Collection;
-use App\Exceptions\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 abstract class QueryPeople
 {
     public static function findAll(): Collection
     {
+        $user = Auth::user();
+
         return People::with(['family'])
+            ->whereHas('family', function (Builder $query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
             ->orderByDesc('updated_at')
             ->get();
     }
 
     public static function findAllLimit(int $limit): Collection
     {
+        $user = Auth::user();
+
         return People::with(['family'])
+            ->whereHas('family', function (Builder $query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
             ->orderByDesc('updated_at')
             ->limit($limit)
             ->get();
@@ -30,30 +41,34 @@ abstract class QueryPeople
 
     public static function findAllWithFilters(Request $request): LengthAwarePaginator
     {
+        $user = Auth::user();
 
-        $builder =  People::with(['family'])
+        $builder = People::with(['family'])
             ->orderByDesc('updated_at');
 
         $familyId = $request->query('family');
-
         $columnSearch = ['full_name', 'bio', 'gender', 'relation_family'];
+        $searchValue = $request->query('q');
 
-        $serachValue = $request->query('q');
-
-        if ($serachValue !== null && !empty($serachValue)) {
-            $builder = SearchData::handle($builder, $serachValue, $columnSearch);
+        if (!empty($searchValue)) {
+            $builder = SearchData::handle($builder, $searchValue, $columnSearch);
         }
 
         if ($familyId !== null) {
-
             if (!Family::where('id', $familyId)->exists()) {
                 throw new ModelNotFoundException(
                     "La famille avec l'ID {$familyId} n'existe pas."
                 );
             }
 
-            $builder->whereHas('family', function ($query) use ($familyId) {
-                $query->where('id', $familyId);
+            $builder->whereHas('family', function (Builder $query) use ($familyId, $user) {
+                $query->where('id', $familyId)
+                    ->where('user_id', $user->id);  // Filtrer sur l'user_id dans la relation family
+            });
+        } else {
+            // Si aucun familyId n'est fourni, on filtre sur la relation family pour cet utilisateur
+            $builder->whereHas('family', function (Builder $query) use ($user) {
+                $query->where('user_id', $user->id);
             });
         }
 
@@ -62,11 +77,22 @@ abstract class QueryPeople
 
     public static function findOneWithRelation(int $id): People
     {
-        return People::with(['family'])->findOrFail($id);
+        $user = Auth::user();
+
+        return People::with(['family'])
+            ->whereHas('family', function (Builder $query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->findOrFail($id);
     }
 
     public static function findOne(int $id): People
     {
-        return People::findOrFail($id);
+        $user = Auth::user();
+
+        return People::whereHas('family', function (Builder $query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->findOrFail($id);
     }
 }

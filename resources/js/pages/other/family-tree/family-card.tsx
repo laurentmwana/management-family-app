@@ -5,7 +5,6 @@ import { storageSourceUrl } from "@/lib/utils"
 import { Family } from "@/types"
 import { format } from "date-fns"
 
-
 interface FamilyCardProps {
   family: Family
 }
@@ -17,14 +16,14 @@ export const FamilyCard = ({ family }: FamilyCardProps) => {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-2xl">{family.name}</CardTitle>
-            <CardDescription>{family.description || "No description available"}</CardDescription>
+            <CardDescription>{family.description || "Aucune description disponible"}</CardDescription>
           </div>
-          <Badge variant="outline">Created {format(new Date(family.created_at), "MMM d, yyyy")}</Badge>
+          <Badge variant="outline">Créée le {format(new Date(family.created_at), "d MMM, yyyy")}</Badge>
         </div>
       </CardHeader>
       <CardContent>
 
-        <h3 className="mb-4 font-medium">Famille de la famille ({family.peoples.length})</h3>
+        <h3 className="mb-4 font-medium">Membres de la famille ({family.peoples.length})</h3>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {family.peoples.map((person) => (
@@ -49,7 +48,7 @@ export const FamilyCard = ({ family }: FamilyCardProps) => {
                     {person.relation_family}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground">Born: {format(new Date(person.birth), "MMM d, yyyy")}</p>
+                <p className="text-xs text-muted-foreground">Né(e) le : {format(new Date(person.birth), "d MMM, yyyy")}</p>
               </div>
             </div>
           ))}
@@ -58,4 +57,3 @@ export const FamilyCard = ({ family }: FamilyCardProps) => {
     </Card>
   )
 }
-
