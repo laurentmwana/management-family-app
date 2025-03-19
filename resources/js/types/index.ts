@@ -57,6 +57,7 @@ export interface Family {
 
 export interface People {
     id: number;
+    image: string
     full_name: string;
     gender: string;
     relation_family: string;

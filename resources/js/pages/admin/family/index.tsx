@@ -22,7 +22,7 @@ const FamilyIndex = () => {
             <Head title="Famille(s)" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="container-card">
-                    <h2 className="text-base font-semibold">Liste des categories</h2>
+                    <h2 className="text-base font-semibold">Liste des familles</h2>
                     <div className="my-5 flex items-center justify-between">
                         <SearchInput lenghtData={families.total} urlBack={route('#family.index')} />
                         <ModalFormFamily name="" description="" id={null} />

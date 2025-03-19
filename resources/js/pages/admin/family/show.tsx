@@ -28,7 +28,7 @@ const FamilyShow = () => {
                         <h2 className="text-base font-semibold">{family.name}</h2>
                         <ModalFormFamily name={family.name} description={family.description} id={family.id} />
                     </div>
-                    <p className="text-sm">Cette famille a {family.peoples.length} membre(s)</p>
+                    <p className="text-sm mb-4">Cette famille a {family.peoples.length} membre(s)</p>
                     <p className="text-sm">{family.description}</p>
                 </div>
             </div>
