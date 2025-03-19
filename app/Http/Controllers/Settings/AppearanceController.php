@@ -14,6 +14,6 @@ class AppearanceController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Inertia::render('appearance');
+        return Inertia::render('settings/appearance');
     }
 }
